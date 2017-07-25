@@ -1,0 +1,51 @@
+- name: Set up site alias
+  set_fact:
+    site: "{{ item.value }}"
+    site_name: "{{ item.key }}"
+
+- name: Set command to init command
+  set_fact:
+    duplicacy_command: "{{ duplicacy_remote_path }} init {{ site.init_commandline_args }}"
+
+- name: Create scripts dir
+  file:
+    name: "{{ DUPLICACY_SCRIPTS_DIR }}"
+    state: directory
+
+- name: create-repository-init-script
+  template:
+    src: duplicacy.site.template.sh
+    dest: "{{ DUPLICACY_SCRIPTS_DIR }}/{{ site_name }}.init.sh"
+    mode: "700"
+
+- name: init repository
+  command: "{{ DUPLICACY_SCRIPTS_DIR }}/{{ site_name }}.init.sh"
+  register: output
+  # 100 means that site is alteady initialized
+  failed_when: "output.rc != 0 and output.rc != 100"
+  changed_when: "output.rc != 100"
+
+
+- name: install filters
+  template:
+    src: duplicacy.filters
+    dest: "{{ site.directory }}/.duplicacy/filters"
+    mode: "700"
+
+
+- name: Set command to init command
+  set_fact:
+    duplicacy_command: "{{ duplicacy_remote_path }} backup {{ site.update_commandline_args }}"
+
+- name: create update script
+  template:
+    src: duplicacy.site.template.sh
+    dest: "{{ DUPLICACY_SCRIPTS_DIR }}/{{ site_name }}.backup.sh"
+    mode: "700"
+
+- name: install to cron
+  cron:
+    name: "duplicacy-{{ site_name }}"
+    special_time: "{{site.cron_time}}"
+    state: present
+    job: "{{ DUPLICACY_SCRIPTS_DIR }}/{{ site_name }}.backup.sh > /dev/null"

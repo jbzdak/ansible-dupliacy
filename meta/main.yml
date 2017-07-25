@@ -1,0 +1,11 @@
+galaxy_info:
+  author: Jacek Bzdak <jacek@askesis.pl>
+  description: Simple role for duplicity backups
+
+  license: MIT
+
+  min_ansible_version: 2.3
+
+  galaxy_tags: []
+
+dependencies: []
