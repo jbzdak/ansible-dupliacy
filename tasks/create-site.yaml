@@ -35,7 +35,7 @@
 
 - name: Set command to init command
   set_fact:
-    duplicacy_command: "{{ duplicacy_remote_path }} backup {{ site.update_commandline_args }}"
+    duplicacy_command: "nice -n 19 ionice -c 3{{ duplicacy_remote_path }} backup {{ site.update_commandline_args }}"
 
 - name: create update script
   template:
