@@ -1,0 +1,75 @@
+- name: Create scripts directory
+  file:
+    name: "{{ DUPLICACY.scripts }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0770
+
+- name: Set up snapshot alias
+  set_fact:
+    snapshot: "{{ item.value }}"
+    snapshot_name: "{{ item.key }}"
+
+- name: Set command to init command
+  set_fact:
+    duplicacy_command: "{{ duplicacy }} init {{ DUPLICACY_STORAGE[snapshot.storage].init_args }} {{ snapshot_name }} '{{ DUPLICACY_STORAGE[snapshot.storage].url }}'"
+
+- name: Create storage init script
+  template:
+    src: duplicacy_wrapper.j2
+    dest: "{{ DUPLICACY.scripts }}/{{ snapshot_name }}.init.sh"
+    mode: 0770
+
+- name: Initialize the storage
+  command: "{{ DUPLICACY.scripts }}/{{ snapshot_name }}.init.sh"
+  register: output
+  # 100 means that the storage is already initialized
+  failed_when: "output.rc != 0 and output.rc != 100"
+  changed_when: "output.rc != 100"
+
+- name: Install filters
+  template:
+    src: duplicacy_filters.j2
+    dest: "{{ snapshot.root }}/.duplicacy/filters"
+    mode: 0660
+
+- name: Set command to backup command
+  set_fact:
+    duplicacy_command: "nice -n 19 ionice -c 3 {{ duplicacy }} backup {{ snapshot.backup_args }}"
+
+- name: Create backup script
+  template:
+    src: duplicacy_wrapper.j2
+    dest: "{{ DUPLICACY.scripts }}/{{ snapshot_name }}.backup.sh"
+    mode: 0770
+
+- name: Schedule backup in cron
+  cron:
+    name: "duplicacy-{{ snapshot_name }}"
+    minute: "{{ snapshot.backup_cron.minute }}"
+    hour: "{{ snapshot.backup_cron.hour }}"
+    job: "{{ DUPLICACY.scripts }}/{{ snapshot_name }}.backup.sh > /dev/null"
+    cron_file: "duplicacy-{{ snapshot_name }}"
+    user: root
+    state: present
+
+- name: Set command to prune command
+  set_fact:
+    duplicacy_command: "nice -n 19 ionice -c 3 {{ duplicacy }} prune {{ snapshot.prune_args }}"
+
+- name: Create prune script
+  template:
+    src: duplicacy_wrapper.j2
+    dest: "{{ DUPLICACY.scripts }}/{{ snapshot_name }}.prune.sh"
+    mode: 0770
+
+- name: Schedule prune in cron
+  cron:
+    name: "duplicacy-{{ snapshot_name }}-prune"
+    minute: "{{ snapshot.prune_cron.minute }}"
+    hour: "{{ snapshot.prune_cron.hour }}"
+    job: "{{ DUPLICACY.scripts }}/{{ snapshot_name }}.prune.sh > /dev/null"
+    cron_file: "duplicacy-{{ snapshot_name }}-prune"
+    user: root
+    state: present
