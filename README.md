@@ -1,7 +1,7 @@
 ansible-duplicacy
 =========
 
-Ansible role that installs duplicacy and sets cron scheduled backups for as many folders as necessary.
+Ansible role that installs duplicacy and sets cron scheduled backups for as many snapshots as necessary.
 
 Role Variables
 --------------
