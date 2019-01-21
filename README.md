@@ -31,12 +31,12 @@ DUPLICACY_FILTERS: |
   -.Idea*/
   -.m2*/
   +*
-````
+```
 
 Host Variables
 --------------
 
-````
+```
 # Specific snapshot ID's to create and maintain - these should be in your host_vars
  DUPLICACY_SNAPSHOT:
    myhomedir:
