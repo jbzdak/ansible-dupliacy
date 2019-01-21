@@ -1,5 +1,5 @@
 ---
-- name: Download download duplicacy
+- name: Download Duplicacy
   get_url:
     url: "{{ DUPLICACY.url }}"
     dest: "{{ duplicacy }}"
@@ -9,7 +9,7 @@
     owner: root
     group: root
 
-- name: Install site scripts
-  include: create-site.yaml
-  with_dict: "{{ DUPLICACY_SITES }}"
+- name: Install snapshot scripts
+  include: create-snapshot.yaml
+  with_dict: "{{ DUPLICACY_SNAPSHOT }}"
 

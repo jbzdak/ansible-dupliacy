@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-cd {{ site.directory }}
+cd {{ snapshot.root }}
 
-{% for name, value in site.env.items() %}
+{% for name, value in snapshot.env.items() %}
 export {{ name|trim }}='{{ value|trim }}'
 {% endfor %}
 
