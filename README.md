@@ -1,13 +1,14 @@
 Role Name
 =========
 
-Simple role that installs duplicacy and installs backups in CRON as many folders as necessary. 
+Simple role that installs duplicacy and installs backups in CRON as many folders as necessary.
 
 Role Variables
 --------------
 
+```
 DUPLICACY_SITES:
-  # Site name 
+  # Site name
   home:
     directory: /home/user
     ignore_filters: "{{ DEFAULT_IGNORE_FILTERS }}"
@@ -19,7 +20,7 @@ DUPLICACY_SITES:
       DUPLICACY_PASSWORD: something
       DUPLICACY_S3_ID: an ID
       DUPLICACY_S3_SECRET: secret
-
+```
 
 
 License
