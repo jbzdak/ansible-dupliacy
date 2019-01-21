@@ -1,4 +1,3 @@
 # Variables generated from remote defaults.yaml
 
-duplicacy_remote_path: "{{ DUPLICACY_TARGET_DIRECTORY }}{{DUPLICACY_INSTALL.duplicacy_filename}}"
-
+duplicacy: "{{ DUPLICACY.dest }}/{{ DUPLICACY.binary }}"

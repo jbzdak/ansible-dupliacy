@@ -1,10 +1,13 @@
 ---
 - name: Download download duplicacy
   get_url:
-    url: "{{ DUPLICACY_INSTALL.url }}"
-    dest: "{{ DUPLICACY_TARGET_DIRECTORY }}"
-    checksum: sha256:{{ DUPLICACY_INSTALL.sha256sum }}
-    mode: "555"
+    url: "{{ DUPLICACY.url }}"
+    dest: "{{ duplicacy }}"
+    # only the sha1 algorithm is available on all platforms and python versions.
+    checksum: sha1:{{ DUPLICACY.sha1sum }}
+    mode: 0775
+    owner: root
+    group: root
 
 - name: Install site scripts
   include: create-site.yaml

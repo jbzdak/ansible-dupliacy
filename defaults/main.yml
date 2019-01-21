@@ -1,15 +1,11 @@
 ---
 
-DUPLICACY_SCRIPTS_DIR: /root/duplicacy
-
-DUPLICACY_INSTALL:
+DUPLICACY:
   url: https://github.com/gilbertchen/duplicacy/releases/download/v2.1.2/duplicacy_linux_x64_2.1.2
-  sha256sum: 034720abb90702cffc4f59ff8c29cda61f14d9065e6ca0e4017ba144372f95d7
-  duplicacy_filename: duplicacy_linux_x64_2.1.2
-
-
-# Should be in path
-DUPLICACY_TARGET_DIRECTORY: /usr/local/bin/
+  sha1sum: 51749626c48a616631c73c62bec601aa42473b08
+  binary: duplicacy
+  dest: /usr/local/bin
+  scripts: /root/duplicacy
 
 DEFAULT_IGNORE_FILTERS: |
   -Virtualbox*/
@@ -25,16 +21,20 @@ DEFAULT_IGNORE_FILTERS: |
   -.m2*/
 
 
-DUPLICACY_SITES:
-  home:
-    directory: /folder
-    ignore_filters: "{{ DEFAULT_IGNORE_FILTERS }}"
-    init_commandline_args: -e something s3://s3-backup
-    # Update args can be empty
-    update_commandline_args: ""
-    duplicacy_env_args:
-      # You can put arbitrary enviornment variables here
-      DUPLICACY_PASSWORD: something
-      DUPLICACY_S3_ID: an ID
-      DUPLICACY_S3_SECRET: secret
+# Example: Set your own in role_vars
 
+# DUPLICACY_SITES:
+#   home:
+#     directory: /home
+#     ignore_filters: "{{ DEFAULT_IGNORE_FILTERS }}"
+#     init_args: -e p4ssw0rd s3://s3-backup
+#     # Update args can be empty
+#     update_args: ""
+#     env:
+#       # You can put arbitrary environment variables here
+#       DUPLICACY_PASSWORD: something
+#       DUPLICACY_S3_ID: an ID
+#       DUPLICACY_S3_SECRET: secret
+#     cron:
+#       minute: "5"
+#       hour: "*/3"

@@ -12,11 +12,11 @@ DUPLICACY_SITES:
   home:
     directory: /home/user
     ignore_filters: "{{ DEFAULT_IGNORE_FILTERS }}"
-    init_commandline_args: -e something s3://region@amazon.com/bucket/
+    init_args: -e something s3://region@amazon.com/bucket/
     # Update args can be empty
-    update_commandline_args: ""
-    duplicacy_env_args:
-      # You can put arbitrary enviornment variables here
+    update_args: ""
+    env:
+      # You can put arbitrary environment variables here
       DUPLICACY_PASSWORD: something
       DUPLICACY_S3_ID: an ID
       DUPLICACY_S3_SECRET: secret

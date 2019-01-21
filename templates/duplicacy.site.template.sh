@@ -2,7 +2,7 @@
 
 cd {{ site.directory }}
 
-{% for name, value in site.duplicacy_env_args.items() %}
+{% for name, value in site.env.items() %}
 export {{ name|trim }}='{{ value|trim }}'
 {% endfor %}
 

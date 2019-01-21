@@ -5,23 +5,23 @@
 
 - name: Set command to init command
   set_fact:
-    duplicacy_command: "{{ duplicacy_remote_path }} init {{ site.init_commandline_args }}"
+    duplicacy_command: "{{ duplicacy }} init {{ site.init_args }}"
 
 - name: Create scripts directory
   file:
-    name: "{{ DUPLICACY_SCRIPTS_DIR }}"
+    name: "{{ DUPLICACY.scripts }}"
     state: directory
 
 - name: Create repository init script
   template:
     src: duplicacy.site.template.sh
-    dest: "{{ DUPLICACY_SCRIPTS_DIR }}/{{ site_name }}.init.sh"
-    mode: "700"
+    dest: "{{ DUPLICACY.scripts }}/{{ site_name }}.init.sh"
+    mode: 0770
 
 - name: Initialize the repository
-  command: "{{ DUPLICACY_SCRIPTS_DIR }}/{{ site_name }}.init.sh"
+  command: "{{ DUPLICACY.scripts }}/{{ site_name }}.init.sh"
   register: output
-  # 100 means that site is alteady initialized
+  # 100 means that the repo is already initialized
   failed_when: "output.rc != 0 and output.rc != 100"
   changed_when: "output.rc != 100"
 
@@ -30,22 +30,23 @@
   template:
     src: duplicacy.filters
     dest: "{{ site.directory }}/.duplicacy/filters"
-    mode: "700"
-
+    mode: 0660
 
 - name: Set command to backup command
   set_fact:
-    duplicacy_command: "nice -n 19 ionice -c 3{{ duplicacy_remote_path }} backup {{ site.update_commandline_args }}"
+    duplicacy_command: "nice -n 19 ionice -c 3 {{ duplicacy }} backup {{ site.update_args }}"
 
-- name: Create update script
+- name: Create backup script
   template:
     src: duplicacy.site.template.sh
-    dest: "{{ DUPLICACY_SCRIPTS_DIR }}/{{ site_name }}.backup.sh"
-    mode: "700"
+    dest: "{{ DUPLICACY.scripts }}/{{ site_name }}.backup.sh"
+    mode: 0770
 
 - name: Schedule backup in cron
   cron:
     name: "duplicacy-{{ site_name }}"
-    special_time: "{{site.cron_time}}"
+    minute: "{{ site.cron.minute }}"
+    hour: "{{ site.cron.hour }}"
+    job: "{{ DUPLICACY.scripts }}/{{ site_name }}.backup.sh > /dev/null"
+    cron_file: "duplicacy-{{ site_name }}"
     state: present
-    job: "{{ DUPLICACY_SCRIPTS_DIR }}/{{ site_name }}.backup.sh > /dev/null"
