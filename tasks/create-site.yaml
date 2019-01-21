@@ -14,7 +14,7 @@
 
 - name: Create repository init script
   template:
-    src: duplicacy.site.template.sh
+    src: duplicacy_site.j2
     dest: "{{ DUPLICACY.scripts }}/{{ site_name }}.init.sh"
     mode: 0770
 
@@ -28,7 +28,7 @@
 
 - name: Install filters
   template:
-    src: duplicacy.filters
+    src: duplicacy_filters.j2
     dest: "{{ site.directory }}/.duplicacy/filters"
     mode: 0660
 
@@ -38,7 +38,7 @@
 
 - name: Create backup script
   template:
-    src: duplicacy.site.template.sh
+    src: duplicacy_site.j2
     dest: "{{ DUPLICACY.scripts }}/{{ site_name }}.backup.sh"
     mode: 0770
 

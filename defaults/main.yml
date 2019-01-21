@@ -7,7 +7,7 @@ DUPLICACY:
   dest: /usr/local/bin
   scripts: /root/duplicacy
 
-DEFAULT_IGNORE_FILTERS: |
+DEFAULT_FILTERS: |
   -Virtualbox*/
   -.android/
   -Downloads/
@@ -19,14 +19,15 @@ DEFAULT_IGNORE_FILTERS: |
   -.Android*/
   -.Idea*/
   -.m2*/
+  +*
 
 
-# Example: Set your own in role_vars
+# Example: Set your own in role_vars or host_vars
 
 # DUPLICACY_SITES:
 #   home:
 #     directory: /home
-#     ignore_filters: "{{ DEFAULT_IGNORE_FILTERS }}"
+#     filters: "{{ DEFAULT_FILTERS }}"
 #     init_args: -e p4ssw0rd s3://s3-backup
 #     # Update args can be empty
 #     update_args: ""

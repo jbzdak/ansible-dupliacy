@@ -11,7 +11,7 @@ DUPLICACY_SITES:
   # Site name
   home:
     directory: /home/user
-    ignore_filters: "{{ DEFAULT_IGNORE_FILTERS }}"
+    filters: "{{ DEFAULT_FILTERS }}"
     init_args: -e something s3://region@amazon.com/bucket/
     # Update args can be empty
     update_args: ""
