@@ -3,9 +3,9 @@
 DUPLICACY_SCRIPTS_DIR: /root/duplicacy
 
 DUPLICACY_INSTALL:
-  url: https://github.com/gilbertchen/duplicacy/releases/download/v2.0.10/duplicacy_linux_x64_2.0.10
-  sha256sum: 02c1171e04e71a02e0154a27b70c649f4c586e3b3fe93fa45cdaa23d8a74b643
-  duplicacy_filename: duplicacy_linux_x64_2.0.10
+  url: https://github.com/gilbertchen/duplicacy/releases/download/v2.1.2/duplicacy_linux_x64_2.1.2
+  sha256sum: 034720abb90702cffc4f59ff8c29cda61f14d9065e6ca0e4017ba144372f95d7
+  duplicacy_filename: duplicacy_linux_x64_2.1.2
 
 
 # Should be in path
