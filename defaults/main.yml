@@ -1,7 +1,7 @@
 ---
 DUPLICACY:
-  url: https://github.com/gilbertchen/duplicacy/releases/download/v2.1.2/duplicacy_linux_x64_2.1.2
-  sha1sum: 51749626c48a616631c73c62bec601aa42473b08
+  url: https://github.com/gilbertchen/duplicacy/releases/download/v2.2.3/duplicacy_linux_x64_2.2.3
+  sha1sum: 6e279bd37a3dfb476aa1ffef3112084d109bc0f2
   binary: duplicacy
   dest: /usr/local/bin
   scripts: /root/duplicacy
