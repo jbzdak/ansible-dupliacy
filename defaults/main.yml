@@ -1,40 +1,7 @@
 ---
-
-DUPLICACY_SCRIPTS_DIR: /root/duplicacy
-
-DUPLICACY_INSTALL:
-  url: https://github.com/gilbertchen/duplicacy/releases/download/v2.0.10/duplicacy_linux_x64_2.0.10
-  sha256sum: 02c1171e04e71a02e0154a27b70c649f4c586e3b3fe93fa45cdaa23d8a74b643
-  duplicacy_filename: duplicacy_linux_x64_2.0.10
-
-
-# Should be in path
-DUPLICACY_TARGET_DIRECTORY: /usr/local/bin/
-
-DEFAULT_IGNORE_FILTERS: |
-  -Virtualbox*/
-  -.android/
-  -Downloads/
-  -Android/
-  -.cache/
-  -vagrant*/
-  -.PyCharm*/
-  -.gradle/
-  -.Android*/
-  -.Idea*/
-  -.m2*/
-
-
-DUPLICACY_SITES:
-  home:
-    directory: /folder
-    ignore_filters: "{{ DEFAULT_IGNORE_FILTERS }}"
-    init_commandline_args: -e something s3://s3-backup
-    # Update args can be empty
-    update_commandline_args: ""
-    duplicacy_env_args:
-      # You can put arbitrary enviornment variables here
-      DUPLICACY_PASSWORD: something
-      DUPLICACY_S3_ID: an ID
-      DUPLICACY_S3_SECRET: secret
-
+DUPLICACY:
+  url: https://github.com/gilbertchen/duplicacy/releases/download/v2.2.3/duplicacy_linux_x64_2.2.3
+  sha1sum: 6e279bd37a3dfb476aa1ffef3112084d109bc0f2
+  binary: duplicacy
+  dest: /usr/local/bin
+  scripts: /root/duplicacy

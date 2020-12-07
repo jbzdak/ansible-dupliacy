@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+cd {{ snapshot.root }}
+
+{% for name, value in DUPLICACY_STORAGE[snapshot.storage].env.items() %}
+export {{ name|trim }}='{{ value|trim }}'
+{% endfor %}
+
+{{ duplicacy_command }}
